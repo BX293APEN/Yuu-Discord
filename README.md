@@ -11,6 +11,10 @@ I can grow by replying, as the name "Bot_You_Grow" suggests.
 I want you to reply a lot!!
 
 ## 更新履歴
+### ver. 2.1.1
+- Git Actionsで試運転開始
+    * 一部機能が制限されています
+
 ### ver. 2.0.9
 - 起動PCの変更 
     * モジュールのインストールし忘れが発生している可能性があります。
