@@ -1,0 +1,24 @@
+name: Sample
+
+on:
+  push:
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  numpy-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.13'
+          architecture: 'x64'
+      - name: Install dependencies
+        run: pip install -r module/requirements.txt
+      - name: Run Python
+        run: python main.py
+        env:
+        ACCESS_TOKEN: ${{ secrets.TOKEN }}

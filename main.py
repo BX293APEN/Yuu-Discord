@@ -1,18 +1,14 @@
-import discord, asyncio, os, subprocess, time, json, datetime,sqlite3, re, jaconv, random, requests, glob, io, psutil
+import discord, asyncio, os, subprocess, time, json, datetime,sqlite3, re, jaconv, random, requests, io
 from discord.ext import tasks
 from zoneinfo import ZoneInfo
 from bs4 import BeautifulSoup
-from cairosvg import svg2png
+#from cairosvg import svg2png
 from PIL import Image
+#import glob
 
 def cmd(command):
     r = subprocess.check_output(command, shell=True)
     return r.decode("ANSI").strip()
-    
-def get_pc_status():
-    mem = psutil.virtual_memory() # メモリ使用率
-    cpu = psutil.cpu_percent(interval=1) # CPU使用率
-    return [cpu, mem.percent]
 
 
 def web_scraping(url, tag = "html", num = -1, attribute = "text"):
@@ -180,6 +176,9 @@ class CreateMessage(MySQLite):
             self.categoryData.count("del")      > 0
         ):
             return self.categoryData
+        
+        elif self.categoryData.count("health")>0:
+            return "元気だよ！ありがと(*´ω｀*)〜♪"
 
         else:
             try:
@@ -399,11 +398,12 @@ class MyClient(discord.Client):
         super().__init__(intents=intent)
     
     def get_token(self):
-        with open(f"{str(self.directory)}/TOKEN/discord.token") as tokenFile:
-            tokenData = tokenFile.read()
-            token = tokenData.split("\n")[0]
-            TOKEN = token
-        return TOKEN
+        #with open(f"{str(self.directory)}/TOKEN/discord.token") as tokenFile:
+        #    tokenData = tokenFile.read()
+        #    token = tokenData.split("\n")[0]
+        #    TOKEN = token
+        #return TOKEN
+        return os.getenv('ACCESS_TOKEN')
     
     def __enter__(self):
         self.run(self.get_token()) # Botの起動とDiscordサーバーへの接続
@@ -694,13 +694,13 @@ class MyClient(discord.Client):
     
                 svgCode = requests.get(svgWeatherURL).content
     
-                svg2png(bytestring=svgCode,write_to=f"{self.directory}/icon/{fileName}.png")
-
-                file = discord.File (
-                    fp=f"{self.directory}/icon/{fileName}.png",
-                    filename=f"{fileName}.png",
-                    spoiler=False
-                )
+                #svg2png(bytestring=svgCode,write_to=f"{self.directory}/icon/{fileName}.png")
+#
+                #file = discord.File (
+                #    fp=f"{self.directory}/icon/{fileName}.png",
+                #    filename=f"{fileName}.png",
+                #    spoiler=False
+                #)
 
                 embed = discord.Embed( 
                     title=f"{str(weatherDate)}の{weartherTitle}の詳細",
@@ -708,7 +708,7 @@ class MyClient(discord.Client):
                     url = url
                 )
 
-                embed.set_thumbnail (url= f"attachment://{fileName}.png")
+                #embed.set_thumbnail (url= f"attachment://{fileName}.png")
                 embed.set_author(
                     name=weatherJSONData["copyright"]["image"]["title"],
                     icon_url=weatherJSONData["copyright"]["image"]["url"]
@@ -728,7 +728,7 @@ class MyClient(discord.Client):
                     await message.channel.send(
                         sendTimeLineMessage, 
                         embed=embed, 
-                        file=file
+                        #file=file
                     )
                 return
 
@@ -743,60 +743,61 @@ class MyClient(discord.Client):
                     sendTimeLineMessage = f"失敗しました\n{e}"
 
             elif sendTimeLineMessage.count("music") >0:
-                if arrangedMessage.count("音楽:") > 0:
-                    musicName = arrangedMessage.split("音楽:")[1]
-                else:
-                    musicName = arrangedMessage.split("music")[1]
-                if (
-                    musicName.count("停止")>0 or
-                    musicName.count("stop")>0
-                ):
-                    message.guild.voice_client.pause()
-                    sendTimeLineMessage = "音楽を停止します。"
-                elif (
-                    musicName.count("リスト")>0 or
-                    musicName.count("list")>0
-                ):
-                    musicFiles = glob.glob(f"{self.directory}/music/*.mp3")
-                    await self.message_send(f"""{"-" * 5}音楽リスト{"-" * 5}""", message.channel.id)
-                    for file in musicFiles:
-                        file  = file.replace("\\", "/").split(f"{self.directory}/music/")[1]
-                        file = file.split(".mp3")[0]
-                        await self.message_send(file,message.channel.id)
-                    sendTimeLineMessage = "-" * 20
-
-                elif (
-                    musicName.count("切断")>0 or
-                    musicName.count("disconnect")>0
-                ):
-                    try:
-                        message.guild.voice_client.stop()
-                    except:
-                        pass
-                    try:
-                        await message.guild.voice_client.disconnect(force=True)
-                    except:
-                        pass
-                    sendTimeLineMessage = "VCから切断します。"
-
-                elif (
-                    musicName.count("再開")>0 or
-                    musicName.count("start")>0
-                ):
-                    message.guild.voice_client.resume()
-                    sendTimeLineMessage = "停止を解除します。"
-                else:
-                    musicName = musicName.replace(" ","")
-                    with open(f"{self.directory}/music/music_alias.json", "r", encoding="UTF-8") as musicAliasFile:
-                        musicAliasData = json.loads(musicAliasFile.read())
-
-                    for alias in musicAliasData:
-                        if musicName == alias["alias"]:
-                            musicName = alias["title"]
-                            break
-                        
-                    await self.play_music(musicName, message)
-                    return
+                return
+                #if arrangedMessage.count("音楽:") > 0:
+                #    musicName = arrangedMessage.split("音楽:")[1]
+                #else:
+                #    musicName = arrangedMessage.split("music")[1]
+                #if (
+                #    musicName.count("停止")>0 or
+                #    musicName.count("stop")>0
+                #):
+                #    message.guild.voice_client.pause()
+                #    sendTimeLineMessage = "音楽を停止します。"
+                #elif (
+                #    musicName.count("リスト")>0 or
+                #    musicName.count("list")>0
+                #):
+                #    musicFiles = glob.glob(f"{self.directory}/music/*.mp3")
+                #    await self.message_send(f"""{"-" * 5}音楽リスト{"-" * 5}""", message.channel.id)
+                #    for file in musicFiles:
+                #        file  = file.replace("\\", "/").split(f"{self.directory}/music/")[1]
+                #        file = file.split(".mp3")[0]
+                #        await self.message_send(file,message.channel.id)
+                #    sendTimeLineMessage = "-" * 20
+#
+                #elif (
+                #    musicName.count("切断")>0 or
+                #    musicName.count("disconnect")>0
+                #):
+                #    try:
+                #        message.guild.voice_client.stop()
+                #    except:
+                #        pass
+                #    try:
+                #        await message.guild.voice_client.disconnect(force=True)
+                #    except:
+                #        pass
+                #    sendTimeLineMessage = "VCから切断します。"
+#
+                #elif (
+                #    musicName.count("再開")>0 or
+                #    musicName.count("start")>0
+                #):
+                #    message.guild.voice_client.resume()
+                #    sendTimeLineMessage = "停止を解除します。"
+                #else:
+                #    musicName = musicName.replace(" ","")
+                #    with open(f"{self.directory}/music/music_alias.json", "r", encoding="UTF-8") as musicAliasFile:
+                #        musicAliasData = json.loads(musicAliasFile.read())
+#
+                #    for alias in musicAliasData:
+                #        if musicName == alias["alias"]:
+                #            musicName = alias["title"]
+                #            break
+                #        
+                #    await self.play_music(musicName, message)
+                #    return
                 
             elif sendTimeLineMessage.count("calc") >0:
                 await message.clear_reaction("❤️")
@@ -935,8 +936,11 @@ class MyClient(discord.Client):
 
             elif sendTimeLineMessage.count("usecmd") >0:
                 if userName == self.adminName:
-                    commandText = arrangedMessage.split("shell$")[1]
-                    sendTimeLineMessage = f"コマンドを実行しました。\n{cmd(commandText)}"
+                    try:
+                        commandText = arrangedMessage.split("shell$")[1]
+                        sendTimeLineMessage = f"コマンドを実行しました。\n{cmd(commandText)}"
+                    except:
+                        sendTimeLineMessage = "許可されていません"
                 else:
                     sendTimeLineMessage = "許可されていません"
                     try:
@@ -946,14 +950,15 @@ class MyClient(discord.Client):
                     await message.add_reaction("❌")
             
             elif sendTimeLineMessage.count("lock") >0:
-                if userName == self.adminName:
-                    try:
-                        cmd("rundll32.exe user32.dll,LockWorkStation")
-                    except:
-                        pass
-                    sendTimeLineMessage = "ロックしました"
-                else:
-                    sendTimeLineMessage = "許可されていません"
+                sendTimeLineMessage = "許可されていません"
+                #if userName == self.adminName:
+                #    try:
+                #        cmd("rundll32.exe user32.dll,LockWorkStation")
+                #    except:
+                #        pass
+                #    sendTimeLineMessage = "ロックしました"
+                #else:
+                #    sendTimeLineMessage = "許可されていません"
 
             elif sendTimeLineMessage == "help":
                 await self.help_send(message = message)
