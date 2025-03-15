@@ -384,15 +384,15 @@ class MyClient(discord.Client):
         self.emotionFile        = f"{self.dataFolder}sqlite3.db"
         self.eventFilePath      = f"{self.dataFolder}event.json"
         
-        while True:
-            networkTestCommand = subprocess.run("ping 8.8.8.8 -n 1",shell = True)
-            networkStatus = networkTestCommand.returncode
-            if networkStatus == 0:
-                break
-            else:
-                self.botStatus = "ネットワークエラー"
-            time.sleep(5)
-        
+        #while True:
+        #    networkTestCommand = subprocess.run("ping 8.8.8.8 -n 1",shell = True)
+        #    networkStatus = networkTestCommand.returncode
+        #    if networkStatus == 0:
+        #        break
+        #    else:
+        #        self.botStatus = "ネットワークエラー"
+        #    time.sleep(5)
+        time.sleep(5)
         intent = discord.Intents.all()
         intent.message_content = True
         super().__init__(intents=intent)
