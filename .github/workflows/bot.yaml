@@ -1,4 +1,4 @@
-name: Sample
+name: Bot
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  numpy-test:
+  bot-run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,4 +21,4 @@ jobs:
       - name: Run Python
         run: python main.py
         env:
-        ACCESS_TOKEN: ${{ secrets.TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.TOKEN }}
