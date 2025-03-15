@@ -1,0 +1,88 @@
+{
+    "callYuu" : {
+        "title" : "呼び出し方法",
+        "value" : "`ユウ` 又は `$`"
+    },
+    "sendMessage" : {
+        "title" : "メッセージ送信方法",
+        "value" : "`ユウ、○○` 又は `$○○`"
+    },
+    "cmd" : {
+        "title" : "メッセージオプション",
+        "aboutCommand" :[
+            {"title" : "日付","value" : "今日の日付を返信"},
+            {"title" : "時刻","value" : "今の時刻(hour:minute)を返信"},
+            {"title" : "help","value" : "HELPを開く"},
+            {"title" : "計算:(calc)","value" : "計算を行う"},
+            {"title" : "検索:","value" : "Google検索"},
+            {"title" : "モールス信号:`文字列`","value" : "`文字列`をモールス信号化"},
+            {"title" : "日文モールス復号:`モールス信号`","value" : "和文の`モールス信号`を復号"},
+            {"title" : "欧文モールス復号:`モールス信号`","value" : "欧文の`モールス信号`を復号"},
+            {"title" : "リマインダ:","value" : "リマインダを設定"},
+            {"title" : "whoami","value" : "ユーザ名を表示"},
+            {"title" : "サーバ","value" : "サーバ情報を表示"},
+            {"title" : "更新情報(updateinfo)","value" : "アップデート情報を表示"}
+        ],
+        "withArgCommands" : [
+            {
+                "title" : "天気",
+                "value" : "・livedoorのAPIから天気予報を取得\n・場所指定は「都」「道」「府」「県」まで入れる",
+                "args" : [
+                    {"title" : "今日", "value" : "今日の天気を取得"},
+                    {"title" : "明日", "value" : "明日の天気を取得"},
+                    {"title" : "明後日", "value" : "明後日の天気を取得"},
+                    {"title" : "詳細", "value" : "詳細なの天気を取得"},
+                    {"title" : "-e", "value" : "簡易表示"}
+                ]
+
+            },
+            {
+                "title" : "音楽:(music)",
+                "value" : "VCで音楽を再生/停止する",
+                "args" : [
+                    {"title" : "リスト(list)", "value" : "登録されている音楽を表示"},
+                    {"title" : "曲名", "value" : "ボイスチャットで`曲名`の曲を流す"},
+                    {"title" : "停止(stop)", "value" : "音楽を停止"},
+                    {"title" : "再開(start)", "value" : "停止解除"},
+                    {"title" : "切断(disconnect)", "value" : "ボイスチャット終了"}
+                ]
+
+            },
+            {
+                "title" : "削除(del)",
+                "value" : "指定したメッセージを削除する",
+                "args" : [
+                    {"title" : "メッセージID", "value" : "空白を開けることにより複数指定可能"}
+                ]
+
+            }
+        ]
+    },
+    "operator" : {
+        "title" : "計算演算子",
+        "aboutOperator" : [
+            {"title" : "+", "value": "足し算"},
+            {"title" : "-", "value": "引き算"},
+            {"title" : "*", "value": "掛け算"},
+            {"title" : "/", "value": "割り算"},
+            {"title" : "//", "value": "割り算の商"},
+            {"title" : "%", "value": "割り算の余り"},
+            {"title" : "**", "value": "冪乗"}
+        ]
+    },
+    "yuuEmotion" :{
+        "title" : "言葉記憶コマンド",
+        "value" : "半角小文字で書いてください\n(全て「ありがとう」で返信される)",
+        "cmd" : [
+            {"title" : "h", "value": "喜んでる言葉又は、喜びを伝える言葉の時"},
+            {"title" : "c", "value": "褒める言葉の時"},
+            {"title" : "p", "value": "驚いている言葉の時"},
+            {"title" : "a", "value": "アドバイスの言葉の時"},
+            {"title" : "s", "value": "怒っている言葉又は、叱っている言葉の時"},
+            {"title" : "d", "value": "下ネタの時"},
+            {"title" : "g", "value": "挨拶(オウム返しになるので注意)"},
+            {"title" : "r", "value": "悲しかったり辛かったりした時に言う言葉の時(慰めます)"},
+            {"title" : "n", "value": "話しかけてない時"}
+        ]
+    }
+}
